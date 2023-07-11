@@ -1,0 +1,48 @@
+.form-login{
+    font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 90vh;
+    background-color: steelblue;
+}
+
+.tag-email,
+.tag-senha{
+    color: white;
+    margin: 5px;
+}
+
+.login{
+    margin-bottom: 20px;
+}
+
+.campo-email,
+.campo-senha{
+    padding: 5px;
+}
+
+.botao-cadastrar{
+    text-decoration: none;
+    color: white;
+}
+
+.botao-cadastrar:hover{
+    text-decoration: none;
+    color: red;
+}
+
+.botao-entrar-login{
+    margin-top: 20px;
+    width: 177px;
+    background-color: transparent;
+    border-color: orange;
+}
+
+.botao-entrar-login:hover{
+    margin-top: 20px;
+    width: 177px;
+    background-color: transparent;
+    font-weight: bold;
+    border-color: red;
+}
