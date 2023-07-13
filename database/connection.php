@@ -12,9 +12,10 @@ class Connection{
             $this->conn = new PDO("mysql:host=$this->servername;dbname=$this->dbname", $this->username, $this->password);
             $this->conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
+            // Cria as tabelas, se não existirem no banco de dados
             $this->CreateTableUser();
-            $this->CreateTableAccount();
             $this->CreateTableFinance();
+            $this->CreateTableAccount();
         }catch(PDOException $erro){
             echo "Falha na conexão: " . $erro->getMessage();
         }
@@ -39,7 +40,9 @@ class Connection{
         $sql = "CREATE TABLE IF NOT EXISTS account (
             ID INT AUTO_INCREMENT PRIMARY KEY,
             `nameAccount` VARCHAR(50) NOT NULL,
-            `value` FLOAT NOT NULL
+            `value` FLOAT NOT NULL,
+            `financeID` INT,
+            FOREIGN KEY (financeID) REFERENCES finance(ID)
         )";
 
     if($this->conn->query($sql) === false)
@@ -50,8 +53,7 @@ class Connection{
     public function CreateTableFinance(){
         $sql = "CREATE TABLE IF NOT EXISTS finance (
             ID INT AUTO_INCREMENT PRIMARY KEY,
-            `nameAccount` VARCHAR(80) NOT NULL,
-            `value` FLOAT NOT NULL
+            `balance` FLOAT NOT NULL
             )";
         
         if($this->conn->query($sql) === false)

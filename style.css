@@ -32,17 +32,7 @@
     color: red;
 }
 
-.botao-entrar-login{
-    margin-top: 20px;
-    width: 177px;
-    background-color: transparent;
-    border-color: orange;
-}
-
 .botao-entrar-login:hover{
-    margin-top: 20px;
-    width: 177px;
-    background-color: transparent;
     font-weight: bold;
     border-color: red;
 }

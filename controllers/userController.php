@@ -20,10 +20,10 @@ class UserController{
     // Método para cadastrar um usuário
     public function CadasterUser($email, $password, $name, $dateBirth){
         $stmt = $this->connection->GetConnection()->prepare("INSERT INTO user (`email`, `password`, `name`, `dateBirth`) VALUES (?, ?, ?, ?)");
-        $stmt->bindValue('s', $email, PDO::PARAM_STR);
-        $stmt->bindValue('s', $password, PDO::PARAM_STR);
-        $stmt->bindValue('s', $name, PDO::PARAM_STR);
-        $stmt->bindValue('s', $dateBirth, PDO::PARAM_STR);
+        $stmt->bindValue(1, $email, PDO::PARAM_STR);
+        $stmt->bindValue(2, $password, PDO::PARAM_STR);
+        $stmt->bindValue(3, $name, PDO::PARAM_STR);
+        $stmt->bindValue(4, $dateBirth, PDO::PARAM_STR);
         $stmt->execute();
     }
 
@@ -47,7 +47,7 @@ class UserController{
             if($user){
                 session_start();
                 $_SESSION['logged'] = true;
-                header("Location: ./views/dashboard.php");
+                header("Location: dashboard.php");
                 exit;
             }
             else echo "Email ou senha inválidos";
