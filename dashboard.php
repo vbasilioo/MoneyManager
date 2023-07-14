@@ -1,5 +1,6 @@
 <?php
 
+require_once('controllers/userController.php');
 require_once('controllers/financeController.php');
 require_once('controllers/accountController.php');
 
@@ -16,18 +17,23 @@ if(isset($_GET['logout'])){
     exit;
 }
 
+$userController = new UserController();
 
 $financeController = new Finance();
 $finances = $financeController->ShowFinances();
 
 $accountController = new AccountController();
-$accounts = $accountController->ShowAccounts();
+$accounts = $accountController->ShowAccounts($_SESSION['user_id']);
 
 if(isset($_POST['account_name']) && isset($_POST['account_value'])){
-    $accountController->CadasterAccount($_POST['account_name'], $_POST['account_value']);
+    $accountController->CadasterAccount($_POST['account_name'], $_POST['account_value'], $_SESSION['user_id']);
     header("Location: dashboard.php");
 }
 
+if(isset($_POST['accountPay'])){
+    $accountController->PaymentAccount($account['value'], $_POST['account_id']);
+    header("Location: dashboard.php");
+}
 ?>
 
 <!DOCTYPE html>
@@ -37,7 +43,7 @@ if(isset($_POST['account_name']) && isset($_POST['account_value'])){
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MoneyManager</title>
 </head>
-<body>
+<body style="background-color: #80A56D;">
     <h1>Balanço</h1>
     <ul>
         <?php foreach($finances as $finance): ?>
@@ -55,7 +61,15 @@ if(isset($_POST['account_name']) && isset($_POST['account_value'])){
     <ul>
         <?php foreach($accounts as $account): ?>
         <li>
-            <?php echo $account['nameAccount'] . ' ' . $account['value']; ?>
+            <?php echo $account['nameAccount'] . ' ' . 'R$' . $account['value']; ?>
+            <?php if($account['accountPay'] == 0): ?>
+                <form method="POST" action="dashboard.php">
+                    <input type="hidden" name="account_id" value="<?php echo $account['ID']; ?>">
+                    <button type="submit" name="accountPay">Pagar conta</button>
+                </form>
+            <?php else: ?>
+                <b>(Conta paga)</b>
+            <?php endif; ?>
         </li>
         <?php endforeach; ?>
     </ul>

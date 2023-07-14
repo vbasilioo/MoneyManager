@@ -41,8 +41,8 @@ class Connection{
             ID INT AUTO_INCREMENT PRIMARY KEY,
             `nameAccount` VARCHAR(50) NOT NULL,
             `value` FLOAT NOT NULL,
-            `financeID` INT,
-            FOREIGN KEY (financeID) REFERENCES finance(ID)
+            `accountPay` INT NOT NULL,
+            `IDuser` INT NOT NULL
         )";
 
     if($this->conn->query($sql) === false)

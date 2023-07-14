@@ -16,19 +16,29 @@ class AccountController{
     }
 
     // Método para cadastrar uma conta
-    public function CadasterAccount($nameAccount, $value){
-        $stmt = $this->connection->GetConnection()->prepare("INSERT INTO account (`nameAccount`, `value`) VALUES (?, ?)");
+    public function CadasterAccount($nameAccount, $value, $idUser){
+        $stmt = $this->connection->GetConnection()->prepare("INSERT INTO account (`nameAccount`, `value`, `IDuser`) VALUES (?, ?, ?)");
         $stmt->bindValue(1, $nameAccount, PDO::PARAM_STR);
         $stmt->bindValue(2, $value, PDO::PARAM_STR);
+        $stmt->bindValue(3, $idUser, PDO::PARAM_INT);
         $stmt->execute();
     }
 
     //Método para mostrar contas
-    public function ShowAccounts(){
+    public function ShowAccounts($IDuser){
         $conn = $this->connection->GetConnection();
-        $stmt = $conn->prepare("SELECT * FROM `account`");
+        $stmt = $conn->prepare("SELECT * FROM `account` WHERE `IDuser` = :IDuser");
+        $stmt->bindValue(':IDuser', $IDuser, PDO::PARAM_INT);
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    public function PaymentAccount($value, $id){
+        $conn = $this->connection->GetConnection();
+        $stmt = $conn->prepare("UPDATE `account` SET `value` = :value, `accountPay` = 1 WHERE `ID` = :id");
+        $stmt->bindValue(':value', $value, PDO::PARAM_STR);
+        $stmt->bindValue(':id', $id, PDO::PARAM_INT);
+        $stmt->execute();
     }
 }
 

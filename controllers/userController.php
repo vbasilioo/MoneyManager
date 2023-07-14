@@ -36,7 +36,7 @@ class UserController{
             
             // Busca o usuário no banco de dados
             $conn = $this->connection->GetConnection();
-            $stmt = $conn->prepare("SELECT * FROM user WHERE `email`=:email AND `password`=:password");
+            $stmt = $conn->prepare("SELECT `ID` FROM user WHERE `email`=:email AND `password`=:password");
             $stmt->bindValue(':email', $email, PDO::PARAM_STR);
             $stmt->bindValue(':password', $password, PDO::PARAM_STR);
             $stmt->execute();
@@ -44,9 +44,10 @@ class UserController{
             // Pegar o usuário que estamos pesquisando, e salva na variável $user
             // Pode retorna um vazio ou alguma coisa
             $user = $stmt->fetch(PDO::FETCH_ASSOC);
-            if($user){
+            if($user && isset($user['ID'])) {
                 session_start();
                 $_SESSION['logged'] = true;
+                $_SESSION['user_id'] = $user['ID']; // Armazena o ID do usuário na sessão
                 header("Location: dashboard.php");
                 exit;
             }
