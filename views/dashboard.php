@@ -7,13 +7,13 @@ require_once('controllers/accountController.php');
 session_start();
 
 if(!isset($_SESSION['logged']) || $_SESSION['logged'] !== true){
-    header("Location: index.php");
+    header("Location: ../index.php");
     exit;
 }
 
 if(isset($_GET['logout'])){
     session_destroy();
-    header("Location: index.php");
+    header("Location: ../index.php");
     exit;
 }
 

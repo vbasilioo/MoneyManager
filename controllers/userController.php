@@ -48,7 +48,7 @@ class UserController{
                 session_start();
                 $_SESSION['logged'] = true;
                 $_SESSION['user_id'] = $user['ID']; // Armazena o ID do usuário na sessão
-                header("Location: dashboard.php");
+                header("Location: ./views/dashboard.php");
                 exit;
             }
             else echo "Email ou senha inválidos";
