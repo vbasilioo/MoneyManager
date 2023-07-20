@@ -28,7 +28,8 @@ class Connection{
             `email` VARCHAR(50) NOT NULL,
             `password` VARCHAR(30) NOT NULL,
             `name` VARCHAR(50) NOT NULL,
-            `dateBirth` VARCHAR(12) NOT NULL
+            `dateBirth` VARCHAR(12) NOT NULL,
+            `IDfinance` INT NOT NULl
             )";
         
         if($this->conn->query($sql) === false)
@@ -53,7 +54,8 @@ class Connection{
     public function CreateTableFinance(){
         $sql = "CREATE TABLE IF NOT EXISTS finance (
             ID INT AUTO_INCREMENT PRIMARY KEY,
-            `balance` FLOAT NOT NULL
+            `balance` FLOAT NOT NULL,
+            `IDuser` INT NOT NULL
             )";
         
         if($this->conn->query($sql) === false)
