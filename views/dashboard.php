@@ -45,58 +45,99 @@ if(isset($_POST['accountPay']) && isset($_POST['account_id'])){
     <title>MoneyManager</title>
 </head>
 <body>
-    <div class="container-fluid text-bg-dark">
-        <header class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3 mb-4 border-bottom">
-            <div class="col-md-3 mb-2 mb-md-0">
-                <a href="/" class="d-inline-flex link-body-emphasis text-decoration-none">
-                    <svg class="bi" width="40" height="32" role="img" aria-label="Bootstrap"><use xlink:href="#bootstrap"></use></svg>
-                </a>
-            </div>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200&display=swap');
 
-            <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
-                <li><a href="#" class="nav-link px-2 link-secondary">Início</a></li>
-                <li><a href="#" class="nav-link px-2">Contas</a></li>
-                <li><a href="#" class="nav-link px-2">Balanços</a></li>
+        html, body{
+            height: 100%;
+        }
+
+        body{
+            background-color: slategrey;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .custom-navbar {
+            background-color: cornflowerblue; 
+            border-radius: 0 0 25px 25px;
+            width: 75%;
+            margin: 0 auto;
+        }
+
+        .custom-navbar .navbar-collapse {
+            justify-content: center;
+        }
+
+        .content-dashboard{
+            height: 80vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+    </style>
+
+    <nav class="navbar custom-navbar navbar-expand-lg navbar-light">
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                <a class="nav-link" href="#" style="color: white;font-size: 18px;font-weight: bold;">Início</a>
+                </li>
+            </ul>
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                <a class="nav-link" href="#" style="color: white;font-size: 18px;font-weight: bold;">Contas</a>
+                </li>
+            </ul>
+        </div>
+        <ul class="navbar-nav ml-auto">
+            <li class="nav-item">
+                <a class="nav-link" href="?logout=true" style="color: red;font-size: 18px;font-weight: bold;">Sair</a>
+            </li>
+        </ul>
+    </nav>
+
+    <div class="content-dashboard">
+        <div class="content">
+            <h1 style="text-align:center;">Balanço</h1>
+            <ul class="finance-list">
+                <?php foreach ($finances as $finance): ?>
+                    <li style="list-style-type:none;font-size: 28px;font-weight: bold;text-align:center;"><?php echo $finance['balance']; ?></li>
+                <?php endforeach; ?>
             </ul>
 
-            <div class="col-md-3 text-end">
-                <a href="?logout=true" style="text-decoration: none;">Sair</a>
-            </div>
-        </header>
-    </div>
+            <form method="POST" action="dashboard.php">
+                <input type="text" name="account_name" placeholder="Nova conta" required>
+                <input type="text" name="account_value" placeholder="Valor da nova conta" required>
+                <button type="submit">Adicionar</button>
+            </form>
 
-    <h1>Balanço</h1>
-    <ul>
-        <?php foreach($finances as $finance): ?>
-        <li>
-            <?php echo $finance['balance']; ?>
-        </li>
-        <?php endforeach; ?>
-    </ul>
-    <form method="POST" action="dashboard.php">
-        <input type="text" name="account_name" placeholder="Nova conta" required>
-        <input type="text" name="account_value" placeholder="Valor da nova conta" required>
-        <button type="submit">Adicionar</button>
-    </form>
-    <h1>Contas</h1>
-    <ul>
-        <?php foreach($accounts as $account): ?>
-        <li>
-            <?php echo $account['nameAccount'] . ' ' . 'R$' . $account['value']; ?>
-            <?php if($account['accountPay'] == 0): ?>
-                <form method="POST" action="dashboard.php">
-                    <?php if(isset($account['ID'])): ?>
+            <h1 style="text-align:center;">Contas</h1>
+            <ul class="account-list">
+            <?php foreach ($accounts as $account): ?>
+                <li>
+                <?php echo $account['nameAccount'] . ' ' . 'R$' . $account['value']; ?>
+                <?php if ($account['accountPay'] == 0): ?>
+                    <form method="POST" action="dashboard.php">
+                    <?php if (isset($account['ID'])): ?>
                         <input type="hidden" name="account_id" value="<?php echo $account['ID']; ?>">
                     <?php endif; ?>
                     <button type="submit" name="accountPay">Pagar conta</button>
-                </form>
-            <?php else: ?>
-                <b>(Conta paga)</b>
-            <?php endif; ?>
-        </li>
-        <?php endforeach; ?>
-    </ul>
+                    </form>
+                <?php else: ?>
+                    <b>(Conta paga)</b>
+                <?php endif; ?>
+                </li>
+            <?php endforeach; ?>
+            </ul>
+        </div>
+    </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.1/dist/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 </html>

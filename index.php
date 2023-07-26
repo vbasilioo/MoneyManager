@@ -22,7 +22,7 @@ if(isset($_POST['campoEmail']) && isset($_POST['campoSenha']))
 
         body{
             font-family: 'Poppins', sans-serif;
-            background-color: #ececec;
+            background-color: slategrey;
         }
 
         .box-area{
@@ -63,7 +63,7 @@ if(isset($_POST['campoEmail']) && isset($_POST['campoSenha']))
                     </div>
                     <form method="POST" action="">
                         <div class="input-group mb-3">
-                            <input type="email" name="campoEmail" class="form-control form-control-lg bg-light fs-6" placeholder="Usuário" required>
+                            <input type="email" name="campoEmail" class="form-control form-control-lg bg-light fs-6" placeholder="E-mail" required>
                         </div>
                         <div class="input-group mb-1">
                             <input type="password" name="campoSenha" class="form-control form-control-lg bg-light fs-6" placeholder="Senha" required>
@@ -83,7 +83,7 @@ if(isset($_POST['campoEmail']) && isset($_POST['campoSenha']))
                     </form>
                     <div class="row">
                         <small>
-                            Não tem uma conta? <a href="#">Registre-se</a>
+                            Não tem uma conta? <a href="views/cadastroUsuario.php">Registre-se</a>
                         </small>
                     </div>
                 </div>
