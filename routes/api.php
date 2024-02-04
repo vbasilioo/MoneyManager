@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AuthController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -13,6 +14,8 @@ use Illuminate\Support\Facades\Route;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
+
+Route::post('/authenticate', [AuthController::class, 'authenticate'])->name('authenticate');
 
 Route::prefix('users')->group(function () {
     Route::get('/', [UserController::class, 'index']);
