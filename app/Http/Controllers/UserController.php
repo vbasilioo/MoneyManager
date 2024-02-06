@@ -4,23 +4,21 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use App\Utils\ApiResponse;
-use Exception;
-use Illuminate\Validation\Rule;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 
 class UserController extends Controller
 {
-
     public function index(){
         try{
             $users = User::all();
 
             if($users->isEmpty())
-                return ApiResponse::success(null, 'Nenhum usuário encontrado.');
+                return ApiResponse::success(null, 'No users found.');
 
-            return ApiResponse::success($users, 'Usuários listados.');
+            return ApiResponse::success($users, 'Users listed.');
         }catch(\Exception $error){
-            return ApiResponse::error('Falha ao buscar os usuários.');
+            return ApiResponse::error('Failed to fetch users.');
         }
     }
 
@@ -28,9 +26,9 @@ class UserController extends Controller
         try{
             $user = User::findOrFail($id);
 
-            return ApiResponse::success($user, 'Usuário encontrado.');
+            return ApiResponse::success($user, 'User found.');
         }catch(\Exception $error){
-            return ApiResponse::error('Usuário não encontrado.', 404);
+            return ApiResponse::error('User not found.', 404);
         }
     }
 
@@ -48,12 +46,12 @@ class UserController extends Controller
                 'password' => bcrypt($request->input('password')),
             ]);
 
-            return ApiResponse::success($user, 'Usuário criado com sucesso.', 201);
+            return ApiResponse::success($user, 'User created successfully.', 201);
         }catch(\Illuminate\Validation\ValidationException $validationException){
             $errors = $validationException->validator->errors()->all();
             return ApiResponse::error(implode(' ', $errors), 422);
         }catch(\Exception $error){
-            return ApiResponse::error('Falha ao criar um usuário.' . $error->getMessage());
+            return ApiResponse::error('Failed to create a user.' . $error->getMessage());
         }
     }
 
@@ -72,9 +70,9 @@ class UserController extends Controller
 
             $user->update($request->all());
 
-            return ApiResponse::success($user, 'Usuário atualizado com sucesso.');
+            return ApiResponse::success($user, 'User updated successfully.');
         }catch(\Exception $error){
-            return ApiResponse::error('Falha ao atualizar o usuário.');
+            return ApiResponse::error('Failed to update the user.');
         }
     }
 
@@ -84,9 +82,9 @@ class UserController extends Controller
 
             $user->delete();
 
-            return ApiResponse::success(null, 'Usuário excluído com sucesso.');
+            return ApiResponse::success(null, 'User deleted successfully.');
         }catch(\Exception $error){
-            return ApiResponse::error('Falha ao excluir o usuário.');
+            return ApiResponse::error('Failed to delete the user.');
         }
     }
 }
